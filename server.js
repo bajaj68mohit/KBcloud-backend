@@ -16,10 +16,13 @@ var express = require('express')
 var cors = require('cors')
 var app = express()
  
-app.use(cors())
+var corsOptions = {
+  origin: 'http://localhost:3000',
+  optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
+}
  
-app.get('/products/:id', function (req, res, next) {
-  res.json({msg: 'This is CORS-enabled for all origins!'})
+app.get('/products/:id', cors(corsOptions), function (req, res, next) {
+  res.json({msg: 'This is CORS-enabled for only example.com.'})
 })
  
 app.listen(80, function () {
